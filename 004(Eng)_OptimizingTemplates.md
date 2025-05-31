@@ -222,7 +222,8 @@ These implicit instantiations are a direct consequence of each `.cpp` file that 
 
 The repetition of the same definitions across several object files - `Alpha.o`, `Beta.o`, `Gamma.o` - perfectly illustrates the problem this article is dedicated to solve.
 
-> [!Warning] When the same symbol is defined in multiple translation units, it means the compiler did extra work!
+> **Warning**:
+> When the same symbol is defined in multiple translation units, it means the compiler did extra work!
 > The compiler processed the same code multiple times and produced duplicate blocks of machine instructions.
 > In the end, the linker discards all of these duplicates except one.
 
