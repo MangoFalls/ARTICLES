@@ -302,7 +302,7 @@ The program’s output and the list of symbols in the translation units will be 
 
 That’s because, in this case, the inline file with the template definitions is simply a part of the header file - even if it’s been neatly separated into its own file. As long as the definitions remain accessible during compilation in each `.cpp`, placing them outside the class body doesn’t matter.
 
-> [!summary] **Conclusion**:
+> **Conclusion**:
 > Including an inline file in the header might make the code look a bit tidier, but it doesn’t do anything to optimize the compilation process.
 
 # Approach 3: Inline Files in `.cpp`
@@ -434,7 +434,7 @@ To sum up, we eliminated the duplication of binary symbols across the project. B
 
 We have to watch carefully to make sure each template definition is present in the project only once. In every new `.cpp` file that uses even a single template, we’ll need to do some mental juggling. Choosing between including the `.inl` file and using `extern template` isn’t always obvious. This situation becomes unbearably convoluted when the number of templates and translation units in the project grows beyond a handful.
 
-> [!summary] **Conclusion**:
+> **Conclusion**:
 > Including inline files directly in `.cpp` files helps avoid duplicate symbols. However, this approach requires excessive effort to maintain and is hardly practical in real-world projects.
 
 # Approach 4: Explicit Template Instantiation
@@ -565,7 +565,7 @@ The `-fno-implicit-templates` flag prevents the compiler from creating hidden in
 
 If we try to apply this flag to the projects from the previous approaches, the compiler will throw a linkage error, complaining about undefined symbols in the `Alpha`, `Beta`, and `Gamma` translation units.
 
-> [!summary] **Conclusion**:
+> **Conclusion**:
 > One of the most predictable and scalable ways to eliminate symbol duplication in a project that uses templates is to define explicit instantiations of those templates in a separate `.cpp` file and maintain a matching set of `extern template` declarations in the header file.
 
 # Approach 5: Using C++20 Modules
@@ -694,7 +694,7 @@ The second command will give us the exact same symbol distribution that we saw i
 
 The only difference will be in the type names (`SimpleClass@TemplateModule::SimpleFunc()`) - they’ll now include the module’s name where they’re located.
 
-> [!summary] **Conclusion**:
+> **Conclusion**:
 > The C++20 module system does let us avoid symbol duplication during compilation, though it demands considerably more effort than the traditional approach with explicit instantiation declarations and definitions.
 
 # Conclusion
