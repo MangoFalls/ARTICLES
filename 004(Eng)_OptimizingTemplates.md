@@ -701,6 +701,8 @@ The only difference will be in the type names (`SimpleClass@TemplateModule::Simp
 
 We now know that carelessly introducing templates into a project can lead to significant compile-time slowdowns because of duplicate symbol definitions in different translation units. Fortunately, we have at least three ways to organize our use of templates to avoid this duplication.
 
+All the files for the projects presented in this article are available at the following link: https://github.com/MangoFalls/ARTICLES/tree/main/004_OptimizingTemplates
+
 # References
 
 - https://lugdunum3d.github.io/doc/guidelines.html
