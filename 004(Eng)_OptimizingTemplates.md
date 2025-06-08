@@ -12,7 +12,7 @@ Some of the challenges include compile-time slowdown, binary code bloat, and the
 
 Below, we’ll look at a few ways to tackle these issues by organizing our code and project files efficiently.
 
-# Approach 1: Defining Templates in Header Files
+# Approach 1: Placing Templates in Header Files
 
 Templates behave a bit differently from regular entities.
 
@@ -290,7 +290,7 @@ void TemplateClass<Type>::ComplexTemplateFunc(const T& value) {
 }
 
 //-----------------------------
-// Other files are the same as in Approach 1
+// Other files are identical to Approach 1
 //-----------------------------
 
 ```
@@ -393,7 +393,7 @@ void GammaLogic() {
 }
 
 //-----------------------------
-// Other files are the same as in Approach 2
+// Other files are identical to Approach 2
 //-----------------------------
 
 ```
@@ -501,7 +501,7 @@ extern template void SimpleClass::SimpleTemplateFunc<int>(const int&);
 extern template void TemplateClass<int>::ComplexTemplateFunc<int>(const int&);
 
 //-----------------------------
-// Other files are the same as in Approach 1
+// Other files are identical to Approach 1
 //-----------------------------
 ```
 
@@ -650,7 +650,7 @@ void GammaLogic() {
 }
 
 //-----------------------------
-// Other files are the same as in Approach 1
+// Other files are identical to Approach 1
 //-----------------------------
 
 ```
@@ -706,12 +706,12 @@ All the files for the projects presented in this article are available at the fo
 
 # References
 
-- https://lugdunum3d.github.io/doc/guidelines.html
-- https://timsong-cpp.github.io/cppwp/n4861/module.reach
-- https://en.cppreference.com/w/cpp/language/class_template
-- https://gcc.gnu.org/onlinedocs/gcc-15.1.0/gcc/Template-Instantiation.html
-- https://stackoverflow.com/questions/1208028/significance-of-a-inl-file-in-c
-- https://learn.microsoft.com/en-us/cpp/cpp/source-code-organization-cpp-templates
-- https://forums.unrealengine.com/t/can-inline-files-inl-be-included-from-a-ue4-header-file/396446
-- https://developercommunity.visualstudio.com/t/intellisense-if-inl-file-with-inline-method-defini/158288
-- https://www.reddit.com/r/cpp_questions/comments/1bcyci3/why_is_there_need_to_use_a_inl_file_after_using/
+1. https://lugdunum3d.github.io/doc/guidelines.html
+2. https://timsong-cpp.github.io/cppwp/n4861/module.reach
+3. https://en.cppreference.com/w/cpp/language/class_template
+4. https://gcc.gnu.org/onlinedocs/gcc-15.1.0/gcc/Template-Instantiation.html
+5. https://stackoverflow.com/questions/1208028/significance-of-a-inl-file-in-c
+6. https://learn.microsoft.com/en-us/cpp/cpp/source-code-organization-cpp-templates
+7. https://forums.unrealengine.com/t/can-inline-files-inl-be-included-from-a-ue4-header-file/396446
+8. https://developercommunity.visualstudio.com/t/intellisense-if-inl-file-with-inline-method-defini/158288
+9. https://www.reddit.com/r/cpp_questions/comments/1bcyci3/why_is_there_need_to_use_a_inl_file_after_using/
