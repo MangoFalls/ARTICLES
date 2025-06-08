@@ -29,17 +29,13 @@
 
 2) Каждый объект класса `UInputAction` отвечает за определенное действие игрока - прыжок, выстрел, использование способности - которое может быть связано с одним или несколькими физическими вводами (кнопками, осями, сенсорами). Этот класс не описывает, какая клавиша выполняет действие: это задача `UInputMappingContext`. `UInputAction` лишь задаёт обработку ввода, его тип, триггеры, модификаторы и т.д.
 
-*(рис.1 файлы UInputAction и UInputMappingContext в Content Browser)*
-
-![[EIS_DataAssetTypes.png]]
+<br><br> ![[EIS_DataAssetTypes.png]](/001_InputRemappingUE/EIS_DataAssetTypes.png) <br>(_рис.1 файлы UInputAction и UInputMappingContext в Content Browser_) <br><br>
 
 3) Класс `FKey` - абстрактное представление определенного ввода. Он инкапсулирует идентификатор ввода, который может быть кнопкой клавиатуры, мыши, осью геймпада, сенсорным вводом, жестом или специализированным устройством.
 
 4) Задача `UInputMappingContext` - содержать пары `UInputAction`-`FKey`, которые, вместе с дополнительными параметрами объединены в объекты структуры `FEnhancedActionKeyMapping` (маппинги). Помимо собственно этой пары, маппинги несут в себе, среди прочего, объекты `UInputTrigger`, определяющие, при каких условиях действие активируется данным вводом, и объекты `UInputModifier`, которые как-либо меняют (фильтруют, масштабируют и т.д.) данные, получаемые от ввода.
 
-![[EIS_FEnhancedActionKeyMapping.png]]
-
-*(рис.2 записи FEnhancedActionKeyMapping в файле UInputMappingContext)*
+<br><br> ![[EIS_FEnhancedActionKeyMapping.png]](/001_InputRemappingUE/EIS_FEnhancedActionKeyMapping.png) <br>(_рис.2 записи FEnhancedActionKeyMapping в файле UInputMappingContext_) <br><br>
 
 5) Помимо общих для рассматриваемых ниже EIS-классов, библиотечная логика переназначения ввода и его сохранения основывается на ряде специфичных для первого подхода классов. Так, `UEnhancedInputUserSettings` управляет пользовательскими настройками ввода, в том числе, сохраняет их между запусками игры. Сохраненные настройки привязаны к профилю игрока - `UEnhancedPlayerMappableKeyProfile`. В рамках первого подхода, как и в большинстве игр, мы будет работать лишь с одним профилем.
 
@@ -47,7 +43,7 @@
 
 Описываемый ниже подход я применил при подготовке системы ремаппинга в игре [Furnish Master](https://store.steampowered.com/app/2004080/Furnish_Master/).
 
-![[EIS_FinalScreen.png]]
+<br><br> ![[EIS_FinalScreen.png]](/001_InputRemappingUE/EIS_FinalScreen.png)<br><br>
 
 Итоговый код проекта достаточно плотно увязан с существующей архитектурой игры, так что здесь только фрагменты, использующие интересующие нас функции и классы. Методы, не имеющие отношения к системе ремаппинга, были исключены из примеров.
 
@@ -59,9 +55,7 @@
 
 Ставим галочку в пункте `Enable User Settings`. Если этот флаг не отметить, у нас не будет доступа к объекту `UEnhancedInputUserSettings` в рантайм, а указатели на него будут пустыми.
 
-![[EIS_EnableUserSettings.png]]
-
-*(рис. 3 Где найти `Enable User Settings` в `Project Settings`)*
+<br><br> ![[EIS_EnableUserSettings.png]](/001_InputRemappingUE/EIS_EnableUserSettings.png) <br>(_рис. 3 Где найти Enable User Settings в Project Settings_) <br><br>
 
 ## Шаг 2. Собираем нужные указатели
 
@@ -100,9 +94,7 @@ void InitUserSettingsAndProfile()
 
 В разделе `User Settings` в графе `Player Mappable Key Settings` выставляем валидный класс настроек. В данный момент, по умолчанию там есть всего один такой класс, `Player Mappable Key Settings`.
 
-![[EIS_Settings_in_UInputAction.png]]
-
-*(рис.4 Настройки переназначения в `UInputAction`)*
+<br><br> ![[EIS_Settings_in_UInputAction.png]](/001_InputRemappingUE/EIS_Settings_in_UInputAction.png) <br>(_рис.4 Настройки переназначения в UInputAction_) <br><br>
 
 Там же будет нелишним заполнить поля `Name` и `Display Name`. Первое поле это внутрисистемное название действия - переменная `FName MappingName` в классе `FPlayerKeyMapping`. Второе поле это внутриигровое, доступное для локализации название действия - переменная `FText DisplayName` в классе `FPlayerKeyMapping`.
 
@@ -122,9 +114,7 @@ void InitUserSettingsAndProfile()
 
 В интересующем нас маппинге находим пункт `Setting Behavior`. Здесь нам доступно несколько опций:
 
-![[EIS_Settings_in_UInputMappingContext.png]]
-
-*(рис.5 Настройки переназначения в `UInputMappingContext`)*
+<br><br> ![[EIS_Settings_in_UInputMappingContext.png]](/001_InputRemappingUE/EIS_Settings_in_UInputMappingContext.png) <br>(_рис.5 Настройки переназначения в UInputMappingContext_) <br><br>
 
 1) `InheritSettingsFromAction`: Как и явствует из названия, настройки, примененные в `UInputAction`, будут перенесены в данный маппинг. Это значение выставляется у маппингов внутри `Input Mapping Context` по умолчанию, потому и работает логика, описанная в Способе 3.1. Никак индивидуализировать такой маппинг мы не можем.
 
@@ -298,7 +288,7 @@ FMapPlayerKeyArgs FKeyMappingPack::GetKeyArgs(const FKey& NewKey) const
 
 Начало реализации этого "кастомного" подхода полностью повторяет шаг 3 предыдущего раздела.
 
-![[EIS_Player Mappable Key Settings (UE 5.2).png]]
+<br><br> ![[EIS_Player Mappable Key Settings (UE 5.2).png]](/001_InputRemappingUE/EIS_Player Mappable Key Settings (UE 5.2).png) <br><br>
 
 В настройках объектов `Input Action` в графе `Player Mappable Key Settings` выставляем любой валидный класс (по умолчанию, там доступен лишь один).
 

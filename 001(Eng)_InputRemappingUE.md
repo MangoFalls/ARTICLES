@@ -1,4 +1,3 @@
-
 # UE Enhanced Input System: In-Game Remapping Before and After UE 5.3
 
 We'll cover the basic approaches to creating an input remapping system in Unreal Engine 5 using the `Enhanced Input System` plugin. For UE 5.3 and newer versions, we can rely on the built-in settings system. However, for earlier versions, a custom solution is required.
@@ -12,7 +11,6 @@ Currently, the EIS supports at least two approaches to building a remappable con
 - **Approach 1: Built-in logic**. This approach works in projects developed on engine version 5.3 or newer. It’s fairly straightforward and leverages the tools already available in EIS.
 
 - **Approach 2: Custom logic**. This approach was relevant for projects on engine versions up to 5.2 and has, for the most part, become obsolete. However, it may still be useful for projects running on older engine versions.
-
 
 ## Scope of the Article
 
@@ -32,17 +30,13 @@ In this section, we'll overview the key entities of the Enhanced Input System th
 
 2. Each `UInputAction` object represents a specific player action - jumping, shooting, using an ability - that can be tied to one or several physical inputs (buttons, sensors). This class doesn't describe which key executes the action; that's handled by `UInputMappingContext`. `UInputAction` just defines the input's handling for an action, its type, triggers, modifiers, and so on.
 
-*(fig.1 UInputAction & UInputMappingContext files in Content Browser)*
-
-![[EIS_DataAssetTypes.png]]
+<br><br>![[EIS_DataAssetTypes.png]](/001_InputRemappingUE/EIS_DataAssetTypes.png) <br>(_fig.1 UInputAction & UInputMappingContext files in Content Browser_)<br><br>
 
 3. The `FKey` class is an abstract representation of a particular input. It encapsulates the input's identifier, which might be a keyboard key, a mouse button, a gamepad axis, a touch input, a gesture, or a specialized device.
 
 4. It's the job of `UInputMappingContext` to hold `UInputAction & FKey` pairs, bundled together with additional parameters into `FEnhancedActionKeyMapping` objects (mappings). Besides the core pair itself, these mappings also contain `UInputTrigger` objects, which define the conditions for the action to activate with the given input, and `UInputModifier` objects, which somehow modify (filter, scale, etc.) the data from the input.
 
-*(fig.2 FEnhancedActionKeyMapping entries in an UInputMappingContext file)*
-
-![[EIS_FEnhancedActionKeyMapping.png]]
+<br><br> ![[EIS_FEnhancedActionKeyMapping.png]](/001_InputRemappingUE/EIS_FEnhancedActionKeyMapping.png) <br>(_fig.2 FEnhancedActionKeyMapping entries in an UInputMappingContext file_) <br><br>
 
 5. In addition to the general EIS classes above, the library logic for remapping input and saving those mappings relies on several classes specific to the first approach. For example, `UEnhancedInputUserSettings` manages the player's input settings, including persisting them between game sessions. The saved settings are tied to a player's profile - `UEnhancedPlayerMappableKeyProfile`. In the first approach, as in most games, we'll work with just one profile.
 
@@ -52,7 +46,7 @@ In this section, we'll overview the key entities of the Enhanced Input System th
 
 I implemented the approach outlined below while setting up the key remapping system in the game [Furnish Master](https://store.steampowered.com/app/2004080/Furnish_Master/).
 
-![[EIS_FinalScreen.png]]
+<br><br> ![[EIS_FinalScreen.png]](/001_InputRemappingUE/EIS_FinalScreen.png)<br><br>
 
 The final codebase is tightly coupled with the game’s existing architecture, so only fragments that use the relevant APIs are shown here. Methods unrelated to the remapping system have been excluded from the examples.
 
@@ -66,7 +60,7 @@ Head over to `Project Settings` → `Engine` section → `Enhanced Input` → `U
 
 Check the `Enable User Settings` option. If this flag is not enabled, we won't be able to access the `UEnhancedInputUserSettings` object at runtime, and any pointers to it will be null.
 
-*(fig. 3 Where to find `Enable User Settings` in `Project Settings`)*
+<br><br> ![[EIS_EnableUserSettings.png]](/001_InputRemappingUE/EIS_EnableUserSettings.png) <br>(_fig. 3 Where to find Enable User Settings in Project Settings_) <br><br>
 
 ---
 
@@ -111,9 +105,7 @@ In the **Content Browser**, locate and open the `Input Action` asset whose bindi
 
 Inside the **User Settings** section, set a valid class under the `Player Mappable Key Settings` field. At this point, there's typically just one valid class available by default: `Player Mappable Key Settings`.
 
-![[EIS_Settings_in_UInputAction.png]]
-
-*(fig.4 Remapping settings in `UInputAction`)*
+<br><br> ![[EIS_Settings_in_UInputAction.png]](/001_InputRemappingUE/EIS_Settings_in_UInputAction.png) <br>(_fig.4 Remapping settings in UInputAction_) <br><br>
 
 It’s also a good idea to fill out the `Name` and `Display Name` fields.
 
@@ -139,9 +131,7 @@ In the **Content Browser**, locate and open the `Input Mapping Context` asset wh
 
 Within the mapping entry, find the `Setting Behavior` field. We can choose from several options here:
 
-![[EIS_Settings_in_UInputMappingContext.png]]
-
-*(fig.5 Remapping settings in `UInputMappingContext`)*
+<br><br> ![[EIS_Settings_in_UInputMappingContext.png]](/001_InputRemappingUE/EIS_Settings_in_UInputMappingContext.png) <br>(_fig.5 Remapping settings in UInputMappingContext_) <br><br>
 
 1. **`InheritSettingsFromAction`**: As the name suggests, the settings from the associated `UInputAction` will be inherited. This is the default setting for mappings inside an `Input Mapping Context`, which is why the logic described in Method 3.1 works. We can’t customize the mapping individually with this mode.
 
@@ -314,7 +304,7 @@ FMapPlayerKeyArgs FKeyMappingPack::GetKeyArgs(const FKey& NewKey) const
 
 The beginning of this custom approach fully repeats Step 3 of the previous section.
 
-![[EIS_Player Mappable Key Settings (UE 5.2).png]]
+<br><br> ![[EIS_Player Mappable Key Settings (UE 5.2).png]](/001_InputRemappingUE/EIS_Player Mappable Key Settings (UE 5.2).png) <br><br>
 
 In the settings of our `Input Action` assets, under the `Player Mappable Key Settings` field, we assign any valid class (by default, only one is available).
 
@@ -392,7 +382,7 @@ void CollectNewControlSettings(const TArray<UInputMappingContext*>& CurrentConte
 
 Now we need to change a specific key in a particular mapping within a given context. We can solve this in two different ways.
 
-> **Warning!** The actions described below involve direct modification of the context files (`UInputMappingContext`) located in the project’s `Content` folder.  
+> **Warning!** The actions described below involve direct modification of the context files (`UInputMappingContext`) located in the project’s `Content` folder.
 > Any changes we make to these contexts during an editor play session will persist even after the session ends!
 
 ### Option 2.1: Completely Removing and Recreating the Mapping
