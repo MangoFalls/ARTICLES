@@ -304,7 +304,7 @@ FMapPlayerKeyArgs FKeyMappingPack::GetKeyArgs(const FKey& NewKey) const
 
 The beginning of this custom approach fully repeats Step 3 of the previous section.
 
-<br><br> ![[EIS_Player Mappable Key Settings (UE 5.2).png]](/001_InputRemappingUE/EIS_Player Mappable Key Settings (UE 5.2).png) <br><br>
+<br><br> ![[EIS_PlayerMappableKeySettingsUE5Old.png]](/001_InputRemappingUE/EIS_PlayerMappableKeySettingsUE5Old.png) <br><br>
 
 In the settings of our `Input Action` assets, under the `Player Mappable Key Settings` field, we assign any valid class (by default, only one is available).
 

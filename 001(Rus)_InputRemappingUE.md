@@ -288,7 +288,7 @@ FMapPlayerKeyArgs FKeyMappingPack::GetKeyArgs(const FKey& NewKey) const
 
 Начало реализации этого "кастомного" подхода полностью повторяет шаг 3 предыдущего раздела.
 
-<br><br> ![[EIS_Player Mappable Key Settings (UE 5.2).png]](/001_InputRemappingUE/EIS_Player Mappable Key Settings (UE 5.2).png) <br><br>
+<br><br> ![[EIS_PlayerMappableKeySettingsUE5Old.png]](/001_InputRemappingUE/EIS_PlayerMappableKeySettingsUE5Old.png) <br><br>
 
 В настройках объектов `Input Action` в графе `Player Mappable Key Settings` выставляем любой валидный класс (по умолчанию, там доступен лишь один).
 
